@@ -1,0 +1,80 @@
+.encatch-docs-feedback {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(128, 128, 128, 0.25);
+}
+
+/* Default: question + buttons on one row (English). Wraps only when content
+   does not fit — question stays on row 1, all buttons on row 2 (Spanish). */
+.encatch-docs-feedback__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.encatch-docs-feedback__question {
+  margin: 0;
+  flex: 0 1 auto;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  white-space: nowrap;
+}
+
+.encatch-docs-feedback__actions-row {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-width: min(100%, 18rem);
+}
+
+.encatch-docs-feedback__actions {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.encatch-docs-feedback__actions--secondary {
+  margin-left: auto;
+}
+
+.encatch-docs-feedback__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border: 1px solid rgba(128, 128, 128, 0.35);
+  border-radius: 9999px;
+  background: transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.25rem;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.encatch-docs-feedback__pill:hover {
+  background: rgba(128, 128, 128, 0.12);
+}
+
+.encatch-docs-feedback__pill:focus-visible {
+  outline: 2px solid rgba(128, 128, 128, 0.45);
+  outline-offset: 1px;
+}
+
+.encatch-docs-feedback__pill--active {
+  background: rgba(128, 128, 128, 0.18);
+  border-color: rgba(128, 128, 128, 0.5);
+}
+
+.encatch-docs-feedback__icon {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}

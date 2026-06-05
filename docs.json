@@ -1,0 +1,46 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Encatch × Mintlify",
+  "description": "Sample Mintlify docs site with Encatch page feedback in the footer.",
+  "colors": {
+    "primary": "#0f766e"
+  },
+  "customCss": "/custom.css",
+  "integrations": {
+    "telemetry": {
+      "enabled": false
+    }
+  },
+  "navbar": {
+    "links": [
+      {
+        "type": "github",
+        "href": "https://github.com/get-encatch/mintlify-examples"
+      }
+    ]
+  },
+  "navigation": {
+    "languages": [
+      {
+        "language": "en",
+        "default": true,
+        "groups": [
+          {
+            "group": "Documentation",
+            "pages": ["index", "docs-feedback"]
+          }
+        ]
+      },
+      {
+        "language": "es",
+        "groups": [
+          {
+            "group": "Documentación",
+            "pages": ["es/index", "es/docs-feedback"]
+          }
+        ]
+      }
+    ]
+  }
+}
