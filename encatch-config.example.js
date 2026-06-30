@@ -6,11 +6,8 @@
  */
 window.__ENCATCH_CONFIG__ = {
   publishableKey: '',
-  helpfulFormSlug: 'helpful_documentation_choice',
-  helpfulPageUrlQuestionSlug: 'page_url',
+  formSlug: 'documentation_feedback',
+  feedbackTypeQuestionSlug: 'documentation_feedback_type',
+  pageUrlQuestionSlug: 'page_url',
   helpfulChoiceQuestionSlug: 'helpful_question_choice',
-  suggestAnEditFormSlug: 'encatch_suggest_an_edit',
-  suggestAnEditQuestionSlug: 'documentation_url',
-  raiseIssueFormSlug: 'encatch_raise_issue',
-  raiseIssueQuestionSlug: 'page_url',
 };

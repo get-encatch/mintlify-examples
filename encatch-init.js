@@ -6,7 +6,7 @@
  */
 (function () {
   var SDK_URL =
-    'https://cdn.jsdelivr.net/npm/@encatch/web-sdk@1.3.0/dist/encatch.iife.js';
+    'https://cdn.jsdelivr.net/npm/@encatch/web-sdk@1.4.0/dist/encatch.iife.js';
   var initPromise = null;
 
   function getConfig() {
@@ -100,23 +100,34 @@
     });
   }
 
-  function openHelpfulFeedbackForm(pageUrl, vote, locale) {
+  function openDocumentationFeedbackForm(pageUrl, route, locale, helpfulVote) {
     var config = getConfig();
-    var formSlug = (config.helpfulFormSlug || '').trim();
-    var pageUrlQuestionSlug = (config.helpfulPageUrlQuestionSlug || '').trim();
-    var choiceQuestionSlug = (config.helpfulChoiceQuestionSlug || '').trim();
+    var formSlug = (config.formSlug || '').trim();
+    var feedbackTypeQuestionSlug = (config.feedbackTypeQuestionSlug || '').trim();
+    var pageUrlQuestionSlug = (config.pageUrlQuestionSlug || '').trim();
+    var helpfulChoiceQuestionSlug = (config.helpfulChoiceQuestionSlug || '').trim();
 
     if (!formSlug) {
-      console.warn('helpfulFormSlug is not set in encatch-config.js');
+      console.warn('formSlug is not set in encatch-config.js');
+      return;
+    }
+    if (!feedbackTypeQuestionSlug) {
+      console.warn('feedbackTypeQuestionSlug is not set in encatch-config.js');
       return;
     }
     if (!pageUrlQuestionSlug) {
-      console.warn('helpfulPageUrlQuestionSlug is not set in encatch-config.js');
+      console.warn('pageUrlQuestionSlug is not set in encatch-config.js');
       return;
     }
-    if (!choiceQuestionSlug) {
-      console.warn('helpfulChoiceQuestionSlug is not set in encatch-config.js');
-      return;
+    if (route === 'page-helpful') {
+      if (!helpfulChoiceQuestionSlug) {
+        console.warn('helpfulChoiceQuestionSlug is not set in encatch-config.js');
+        return;
+      }
+      if (!helpfulVote) {
+        console.warn('Helpful feedback requires a yes/no vote');
+        return;
+      }
     }
 
     ensureEncatchInitialized().then(function (ready) {
@@ -126,65 +137,26 @@
       var activeLocale = locale || detectLocale();
       syncEncatchLocale(activeLocale).then(function () {
         var encatch = getEncatch();
+        encatch.addToResponse(feedbackTypeQuestionSlug, route);
         encatch.addToResponse(pageUrlQuestionSlug, toAbsolutePageUrl(pageUrl));
-        encatch.addToResponse(choiceQuestionSlug, vote);
+        if (route === 'page-helpful' && helpfulVote) {
+          encatch.addToResponse(helpfulChoiceQuestionSlug, helpfulVote);
+        }
         encatch.showForm(formSlug);
       });
     });
+  }
+
+  function openHelpfulFeedbackForm(pageUrl, vote, locale) {
+    openDocumentationFeedbackForm(pageUrl, 'page-helpful', locale, vote);
   }
 
   function openSuggestEditForm(pageUrl, locale) {
-    var config = getConfig();
-    var formSlug = (config.suggestAnEditFormSlug || '').trim();
-    var questionSlug = (config.suggestAnEditQuestionSlug || '').trim();
-
-    if (!formSlug) {
-      console.warn('suggestAnEditFormSlug is not set in encatch-config.js');
-      return;
-    }
-    if (!questionSlug) {
-      console.warn('suggestAnEditQuestionSlug is not set in encatch-config.js');
-      return;
-    }
-
-    ensureEncatchInitialized().then(function (ready) {
-      if (!ready) {
-        return;
-      }
-      var activeLocale = locale || detectLocale();
-      syncEncatchLocale(activeLocale).then(function () {
-        var encatch = getEncatch();
-        encatch.addToResponse(questionSlug, toAbsolutePageUrl(pageUrl));
-        encatch.showForm(formSlug);
-      });
-    });
+    openDocumentationFeedbackForm(pageUrl, 'suggest-edit', locale);
   }
 
   function openRaiseIssueForm(pageUrl, locale) {
-    var config = getConfig();
-    var formSlug = (config.raiseIssueFormSlug || '').trim();
-    var questionSlug = (config.raiseIssueQuestionSlug || '').trim();
-
-    if (!formSlug) {
-      console.warn('raiseIssueFormSlug is not set in encatch-config.js');
-      return;
-    }
-    if (!questionSlug) {
-      console.warn('raiseIssueQuestionSlug is not set in encatch-config.js');
-      return;
-    }
-
-    ensureEncatchInitialized().then(function (ready) {
-      if (!ready) {
-        return;
-      }
-      var activeLocale = locale || detectLocale();
-      syncEncatchLocale(activeLocale).then(function () {
-        var encatch = getEncatch();
-        encatch.addToResponse(questionSlug, toAbsolutePageUrl(pageUrl));
-        encatch.showForm(formSlug);
-      });
-    });
+    openDocumentationFeedbackForm(pageUrl, 'raise-issue', locale);
   }
 
   window.EncatchDocs = {

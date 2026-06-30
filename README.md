@@ -24,7 +24,7 @@ brew install node@22
 PATH="/opt/homebrew/opt/node@22/bin:$PATH" mint dev
 ```
 
-Copy `encatch-config.example.js` → `encatch-config.js` and set your Encatch publishable key and form slugs.
+Copy `encatch-config.example.js` → `encatch-config.js` and set your Encatch publishable key and combined form slug / question slugs.
 
 **Publishable key:** [admin.encatch.com](https://admin.encatch.com) → **Settings** → **Publishable key**.
 
@@ -40,7 +40,7 @@ Open http://localhost:3000 (or the port shown in the terminal).
 
 This example uses the same pattern as the Fumadocs examples, adapted for Mintlify:
 
-1. **`encatch-config.js`** — publishable key + form slugs (copy from `encatch-config.example.js`). Must use this filename so Mintlify loads it before `encatch-init.js`.
+1. **`encatch-config.js`** — publishable key + combined form slug and question slugs (copy from `encatch-config.example.js`). Must use this filename so Mintlify loads it before `encatch-init.js`.
 2. **`encatch-init.js`** — loads the Encatch SDK from CDN, initializes it, and exposes form helpers on `window.EncatchDocs`.
 3. **`snippets/docs-page-feedback.jsx`** — footer UI (helpful yes/no, suggest edits, raise issue).
 4. **Each MDX page** — imports `<DocsPageFeedback locale="..." />` at the bottom of the page.

@@ -11,8 +11,10 @@ Una buena documentación depende de saber qué páginas ayudan y cuáles confund
 
 Cada página de documentación en este repositorio incluye un pie de página con:
 
-- **¿Esta página le ayudó?** — Sí / No abre un formulario de Encatch con la URL de la página y tu elección (`yes` / `no`) prellenadas (configura `helpfulFormSlug` y las claves relacionadas en `encatch-config.js`).
-- **Sugerir cambios** — Abre un formulario de Encatch con la URL de la página actual prellenada (configura `suggestAnEditFormSlug` y las claves relacionadas en `encatch-config.js`).
-- **Reportar problema** — Abre un formulario de Encatch con la URL de la página actual prellenada (configura `raiseIssueFormSlug` y las claves relacionadas en `encatch-config.js`).
+- **¿Esta página le ayudó?** — Sí / No abre el formulario combinado de Encatch con enrutamiento (`page-helpful`), la URL de la página y tu elección (`yes` / `no`) prellenadas.
+- **Sugerir cambios** — Abre el mismo formulario con enrutamiento (`suggest-edit`) y la URL de la página actual prellenada.
+- **Reportar problema** — Abre el mismo formulario con enrutamiento (`raise-issue`) y la URL de la página actual prellenada.
+
+Configura el slug del formulario y los slugs de las preguntas en `encatch-config.js` (copia desde `encatch-config.example.js`).
 
 <DocsPageFeedback locale="es" />
