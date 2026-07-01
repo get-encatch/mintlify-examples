@@ -10,4 +10,7 @@ window.__ENCATCH_CONFIG__ = {
   feedbackTypeQuestionSlug: 'documentation_feedback_type',
   pageUrlQuestionSlug: 'page_url',
   helpfulChoiceQuestionSlug: 'helpful_question_choice',
+  // Optional — leave blank for encatch.com defaults, or set for enterprise/dev:
+  apiHost: '',
+  webHost: '',
 };

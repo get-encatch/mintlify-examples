@@ -1,7 +1,7 @@
 /**
  * Encatch Web SDK integration for Mintlify docs feedback.
  *
- * Requires encatch-config.js (copy from encatch-config.example.js) to set
+ * Requires encatch-config.js (copy from encatch-config.js.example) to set
  * window.__ENCATCH_CONFIG__ before this script runs.
  */
 (function () {
@@ -23,6 +23,39 @@
 
   function toAbsolutePageUrl(pageUrl) {
     return new URL(pageUrl, window.location.origin).href;
+  }
+
+  function toEncatchHostUrl(value) {
+    var trimmed = (value || '').trim();
+    if (!trimmed) {
+      return undefined;
+    }
+    if (trimmed.indexOf('http://') === 0 || trimmed.indexOf('https://') === 0) {
+      return trimmed;
+    }
+    return 'https://' + trimmed;
+  }
+
+  function getMintlifyTheme() {
+    if (typeof document === 'undefined') {
+      return 'light';
+    }
+    return document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+  }
+
+  function buildEncatchInitConfig(config, options) {
+    var initConfig = {
+      theme: (options && options.theme) || getMintlifyTheme(),
+    };
+    var webHost = toEncatchHostUrl(config.webHost);
+    var apiHost = toEncatchHostUrl(config.apiHost);
+    if (webHost) {
+      initConfig.webHost = webHost;
+    }
+    if (apiHost) {
+      initConfig.apiBaseUrl = apiHost;
+    }
+    return initConfig;
   }
 
   function loadSdk() {
@@ -67,7 +100,7 @@
     var apiKey = (config.publishableKey || '').trim();
     if (!apiKey) {
       console.warn(
-        'Encatch publishableKey is not set. Copy encatch-config.example.js to encatch-config.js and add your key.',
+        'Encatch publishableKey is not set. Copy encatch-config.js.example to encatch-config.js and add your key.',
       );
       return Promise.resolve(false);
     }
@@ -75,8 +108,7 @@
     return loadSdk()
       .then(function (encatch) {
         if (!encatch._initialized) {
-          var theme = (options && options.theme) || 'system';
-          encatch.init(apiKey, { theme: theme });
+          encatch.init(apiKey, buildEncatchInitConfig(config, options));
         }
         return true;
       })
@@ -96,6 +128,33 @@
         return;
       }
       getEncatch().setLocale(normalized);
+    });
+  }
+
+  function syncEncatchTheme(theme) {
+    return ensureEncatchInitialized({ theme: theme || getMintlifyTheme() }).then(
+      function (ready) {
+        if (!ready) {
+          return;
+        }
+        getEncatch().setTheme(theme || getMintlifyTheme());
+      },
+    );
+  }
+
+  var themeObserver = null;
+
+  function watchMintlifyTheme() {
+    if (typeof document === 'undefined' || themeObserver) {
+      return;
+    }
+
+    themeObserver = new MutationObserver(function () {
+      syncEncatchTheme(getMintlifyTheme());
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
     });
   }
 
@@ -162,6 +221,8 @@
     detectLocale: detectLocale,
     ensureEncatchInitialized: ensureEncatchInitialized,
     syncEncatchLocale: syncEncatchLocale,
+    syncEncatchTheme: syncEncatchTheme,
+    getMintlifyTheme: getMintlifyTheme,
     openHelpfulFeedbackForm: openHelpfulFeedbackForm,
     openSuggestEditForm: openSuggestEditForm,
     openRaiseIssueForm: openRaiseIssueForm,
@@ -181,9 +242,11 @@
       return;
     }
 
-    ensureEncatchInitialized().then(function (ready) {
+    ensureEncatchInitialized({ theme: getMintlifyTheme() }).then(function (ready) {
       if (ready) {
         syncEncatchLocale(detectLocale());
+        syncEncatchTheme(getMintlifyTheme());
+        watchMintlifyTheme();
       }
     });
   }

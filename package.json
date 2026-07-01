@@ -1,0 +1,11 @@
+{
+  "name": "encatch-mintlify-examples",
+  "private": true,
+  "scripts": {
+    "test:visual": "playwright test",
+    "test:visual:ui": "playwright test --ui"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.0"
+  }
+}

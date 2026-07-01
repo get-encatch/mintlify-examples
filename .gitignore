@@ -1,5 +1,9 @@
-encatch-config.js
-encatch.config.js
+docs/encatch-config.js
+
+test-results/
+playwright-report/
+screenshots/
+node_modules/
 
 .DS_Store
 *.log
