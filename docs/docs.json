@@ -31,15 +31,6 @@
             "pages": ["index", "docs-feedback"]
           }
         ]
-      },
-      {
-        "language": "es",
-        "groups": [
-          {
-            "group": "Documentación",
-            "pages": ["es/index", "es/docs-feedback"]
-          }
-        ]
       }
     ]
   }

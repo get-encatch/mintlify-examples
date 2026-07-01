@@ -1,22 +1,11 @@
 export const DocsPageFeedback = ({ locale = 'en' }) => {
-  const translations = {
-    en: {
-      helpfulQuestion: 'Was this page helpful?',
-      yes: 'Yes',
-      no: 'No',
-      suggestEdits: 'Suggest edits',
-      raiseIssue: 'Raise issue',
-    },
-    es: {
-      helpfulQuestion: '¿Esta página le ayudó?',
-      yes: 'Sí',
-      no: 'No',
-      suggestEdits: 'Sugerir cambios',
-      raiseIssue: 'Reportar problema',
-    },
+  const t = {
+    helpfulQuestion: 'Was this page helpful?',
+    yes: 'Yes',
+    no: 'No',
+    suggestEdits: 'Suggest edits',
+    raiseIssue: 'Raise issue',
   };
-
-  const t = translations[locale] || translations.en;
   const pageUrl =
     typeof window !== 'undefined' ? window.location.pathname : '/';
 
