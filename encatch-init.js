@@ -18,8 +18,7 @@
   }
 
   function detectLocale() {
-    var path = window.location.pathname || '';
-    return path.indexOf('/es/') === 0 || path === '/es' ? 'es' : 'en';
+    return 'en';
   }
 
   function toAbsolutePageUrl(pageUrl) {

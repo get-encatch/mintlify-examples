@@ -63,9 +63,6 @@ Mintlify site configuration (navigation, theme, i18n) lives in **`docs.json`**. 
 
 ## Pages
 
-| Language | Pages |
-|----------|-------|
-| English | `/index`, `/docs-feedback` |
-| Spanish | `/es/index`, `/es/docs-feedback` |
-
-Use the language switcher in the navbar to switch between English and Spanish.
+| Pages |
+|-------|
+| `/index`, `/docs-feedback` |
